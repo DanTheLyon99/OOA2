@@ -1,16 +1,25 @@
 
 import java.util.Objects;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 
 public class Student {
 
     private String first;
     private String last;
     private int studentNum;
+    private Degree deg;
 
     public Student() {
         this.first = null;
         this.last = null;
         this.studentNum = 0;
+        this.deg = null;
     }
 
     public void setFirstName(String first) {
@@ -39,11 +48,19 @@ public class Student {
         return fullName;
     }
 
+    public void setDegreeProgram(Degree deg) {
+        this.deg = deg;
+    }
+
     public String getFirstName() { return this.first; }
 
     public String getLastName() { return this.last; }
 
     public Integer getStudentNumber() { return this.studentNum; }
+
+    public Degree getDegreeProgram() {
+        return this.deg;
+    }
 
     @Override
     public String toString() {

@@ -12,20 +12,15 @@ import java.util.Optional;
 
 public class PlanOfStudy {
 
-    private Degree deg;
+
     private ArrayList<Course> courses;
     private Student student;
     private CourseCatalog catalogCopy;
 
     public PlanOfStudy() {
-        this.deg = null;
         this.courses = new ArrayList<>();
         this.student = new Student();
         this.catalogCopy = new CourseCatalog();
-    }
-
-    public void setDegreeProgram(Degree deg) {
-        this.deg = deg;
     }
 
     public void setCourses(ArrayList<Course> courses) { this.courses = courses; }
@@ -51,10 +46,6 @@ public class PlanOfStudy {
             }
         }
         System.out.println("Grade could not be updated.");
-    }
-
-    public Degree getDegreeProgram() {
-        return this.deg;
     }
 
     public Student getStudent() { return  this.student; }
@@ -137,7 +128,7 @@ public class PlanOfStudy {
     }
 
     public void saveState() {
-        try (FileWriter PoSData = new FileWriter("PlanOfStudyData.txt")) {
+        try (FileWriter PoSData = new FileWriter("Student.txt")) {
             String fileLine;
 
             fileLine = this.student.getFirstName();
@@ -148,7 +139,7 @@ public class PlanOfStudy {
             fileLine += "?\n";
             PoSData.write(fileLine);
 
-            fileLine = this.deg.getDegreeTitle();
+            /*fileLine = this.deg.getDegreeTitle();
             fileLine += ", ";
             for (Course reqCourse : this.deg.getRequiredCourses()) {
                 fileLine += reqCourse.getCourseCode();
@@ -158,7 +149,7 @@ public class PlanOfStudy {
                 fileLine = fileLine.substring(0, fileLine.length() - 1);
             }
             fileLine += "?";
-            PoSData.write(fileLine);
+            PoSData.write(fileLine);*/
 
             for (Course c : this.courses) {
                 fileLine = c.getCourseCode();
@@ -213,11 +204,11 @@ public class PlanOfStudy {
                     }
                     ArrayList<String> reqArrayList = new ArrayList<>(Arrays.asList(fileContents).subList(1, fileContents.length));
                     switch (fileContents[0]) {
-                    case "BCG":
-                        this.deg = new BCG();
-                        this.deg.setDegreeTitle(fileContents[0]);
-                        this.deg.setRequiredCourses(reqArrayList);
-                        break;
+                    //case "BCG":
+                      //  this.deg = new BCG();
+                       // this.deg.setDegreeTitle(fileContents[0]);
+                        //this.deg.setRequiredCourses(reqArrayList);
+                        //break;
                     // case "CS":
                     //     this.deg = new CS();
                     //     this.deg.setDegreeTitle(fileContents[0]);
@@ -252,7 +243,7 @@ public class PlanOfStudy {
         PoSData.close();
     }
 
-    @Override
+    /*@Override
     public String toString() {
         String toString = "";
         if (this.deg != null) {
@@ -294,6 +285,6 @@ public class PlanOfStudy {
         hash = 97 * hash + Objects.hashCode(this.courses);
         hash = 97 * hash + Objects.hashCode(this.student);
         return hash;
-    }
+    }*/
 
 }
