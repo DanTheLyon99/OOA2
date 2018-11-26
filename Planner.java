@@ -12,6 +12,11 @@ public class Planner extends JFrame {
     ArrayList<Course> requiredCourses = new ArrayList<>();
     CourseCatalog courseCatalog = new CourseCatalog();
     Transcript transcript = new Transcript();
+    ArrayList<String> attemptList = new ArrayList<>();
+    ArrayList<Course> courseList = new ArrayList<>();
+    double currCredits = 0.0;
+    double GPA = 0;
+
 
     /*StartUp UI*/
     private JPanel startP = new JPanel();
@@ -41,7 +46,7 @@ public class Planner extends JFrame {
     private JButton selectMajorB = new JButton("Select Major");
     private JButton remainPreReqB = new JButton("Remaining Credits");
     private JButton listReqCoursesB = new JButton("List Required Courses");
-    private JButton addRemoveCourseB = new JButton(" Add/Remove Courses");
+    private JButton addRemoveCourseB = new JButton(" Add Courses");
     private JButton addRemoveChangeGradeB = new JButton("Add/Remove/Change Grades");
     private JButton saveProgramB = new JButton("SAVE");
     private JButton viewUnknownCoursesB = new JButton("View Unknown Courses");
@@ -52,6 +57,8 @@ public class Planner extends JFrame {
     private JButton viewGpaB = new JButton("View GPA");
     private JButton determineCompletionB = new JButton("Determine Completion");
     private JButton viewCoursePlanB = new JButton("View Course Plan");
+    private JLabel currTranscriptL = new JLabel("Transcript for Student: ");
+    private JTextArea currTranscript = new JTextArea("No current Courses", 10, 20);
 
     /*Degree UI*/
     private JLabel degreeL = new JLabel("Degrees: ");
@@ -159,7 +166,7 @@ public class Planner extends JFrame {
     }
 
     private void Home(){
-        homeP.setVisible(false);
+        //homeP.setVisible(false);
 
         homeP.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -170,15 +177,20 @@ public class Planner extends JFrame {
 
         currStuArea.setEditable(false);
         currDegMinArea.setEditable(false);
+        currTranscript.setEditable(false);
 
         homeP.add(currStuL, gbc);
         gbc.gridx += 2;
         homeP.add(currDegMinL, gbc);
+        gbc.gridx += 2;
+        homeP.add(currTranscriptL, gbc);
         gbc.gridx = 0;
         gbc.gridy++;
         homeP.add(currStuArea, gbc);
         gbc.gridx += 2;
         homeP.add(currDegMinArea, gbc);
+        gbc.gridx += 2;
+        homeP.add(currTranscript, gbc);
         gbc.gridx = 0;
         gbc.gridy++;
         homeP.add(selectDegreeB, gbc);
@@ -190,26 +202,35 @@ public class Planner extends JFrame {
         gbc.gridx++;
         homeP.add(viewGpaB,gbc);
         gbc.gridx++;
+        remainPreReqB.setEnabled(false);
         homeP.add(remainPreReqB, gbc);
         gbc.gridy++;
         gbc.gridx = 0;
+        listReqCoursesB.setEnabled(false);
         homeP.add(listReqCoursesB, gbc);
         gbc.gridx++;
         homeP.add(addRemoveCourseB, gbc);
+        addRemoveCourseB.setEnabled(false);
         gbc.gridx++;
         homeP.add(determineCompletionB, gbc);
         gbc.gridx++;
+        viewCoursePlanB.setEnabled(false);
         homeP.add(viewCoursePlanB, gbc);
         gbc.gridx++;
+        addRemoveChangeGradeB.setEnabled(false);
         homeP.add(addRemoveChangeGradeB, gbc);
         gbc.gridx = 0;
         gbc.gridy++;
+        viewUnknownCoursesB.setEnabled(false);
         homeP.add(viewUnknownCoursesB,gbc);
         gbc.gridx++;
+        viewIncompleteCoursesB.setEnabled(false);
         homeP.add(viewIncompleteCoursesB,gbc);
         gbc.gridx++;
+        viewCurrReqCreditsB.setEnabled(false);
         homeP.add(viewCurrReqCreditsB,gbc);
         gbc.gridx++;
+        viewPreReqs4CourseB.setEnabled(false);
         homeP.add(viewPreReqs4CourseB,gbc);
 
         homeListener home = new homeListener();
@@ -275,8 +296,8 @@ public class Planner extends JFrame {
     }
 
     private void addRemoveCourse(){
-        //addRemoveP.setVisible(false);
-        //addRemoveFinalP.setVisible(false);
+        addRemoveP.setVisible(false);
+        addRemoveFinalP.setVisible(false);
 
         addRemoveP.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -315,11 +336,9 @@ public class Planner extends JFrame {
         gbc2.gridx = 1;
         addRemoveFinalP.add(chooseActionL, gbc2);
         gbc2.gridy = 4;
-        gbc2.gridx = 0;
+        gbc2.gridx = 1;
         addRemoveFinalP.add(addCourseB, gbc2);
-        gbc2.gridx = 2;
-        addRemoveFinalP.add(removeCourseB, gbc2);
-        
+
         /*
         private JTextField gradeText = new JTextField(10);
         private JLabel currSemester = new JLabel("Semester of choice: ");
@@ -331,7 +350,6 @@ public class Planner extends JFrame {
 
         addRemoveCourseListener addRemove = new addRemoveCourseListener();
         addCourseB.addActionListener(addRemove);
-        removeCourseB.addActionListener(addRemove);
         addSelectedCourseB.addActionListener(addRemove);
 
         add(addRemoveP);
@@ -445,21 +463,47 @@ public class Planner extends JFrame {
                 pack();
             }
             else if(event.getSource() == remainPreReqB){
-                listReqCoursesB.setBackground(Color.GREEN);
-                //topHomeP.setVisible(false);
+
+                String intChange;
+                Degree degreeTitle;
+                String degree;
+                double maxCredits = 0.0;
+                intChange = "Current Credits Left: ";
+
+                for(Course c : courseList){
+                    currCredits += c.getCourseCredit();
+                }
+
+                degreeTitle = student.getDegreeProgram();
+                degree = degreeTitle.getDegreeTitle();
+                if(degree.equals("BCG")){
+                    maxCredits = 15.0;
+                }
+                else if(degree.equals("CS")){
+                    maxCredits = 20.0;
+                }
+                else if(degree.equals("SEng")){
+                    maxCredits = 20.0;
+                }
+
+                maxCredits -= currCredits;
+                intChange += Double.toString(maxCredits);
+                currCredits = 0.0;
+
+                JOptionPane.showMessageDialog(homeP, intChange);
                 //homeP.setVisible(false);
             }
             else if(event.getSource() == listReqCoursesB){
-                remainPreReqB.setBackground(Color.MAGENTA);
                 //topHomeP.setVisible(false);
                 //homeP.setVisible(false);
             }
             else if(event.getSource() == addRemoveCourseB){
-                //topHomeP.setVisible(false);
-                //homeP.setVisible(false);
+                remainPreReqB.setEnabled(true);
+                homeP.setVisible(false);
+                addRemoveP.setVisible(true);
+                pack();
             }
             else if(event.getSource() == addRemoveChangeGradeB){
-                addRemoveCourseB.setBackground(Color.BLUE);
                 //topHomeP.setVisible(false);
                 //homeP.setVisible(false);
             }
@@ -468,34 +512,54 @@ public class Planner extends JFrame {
                 //homeP.setVisible(false);
             }
             else if(event.getSource() == viewUnknownCoursesB){
-                viewIncompleteCoursesB.setBackground(Color.PINK);
                 //topHomeP.setVisible(false);
                 //homeP.setVisible(false);
             }
             else if(event.getSource() == viewIncompleteCoursesB){
-                viewUnknownCoursesB.setBackground(Color.DARK_GRAY);
                 //topHomeP.setVisible(false);
                 //homeP.setVisible(false);
             }
             else if(event.getSource() == viewCurrReqCreditsB){
-                viewCreditsB.setBackground(Color.YELLOW);
                 //topHomeP.setVisible(false);
                 //homeP.setVisible(false);
             }
             else if(event.getSource() == viewCreditsB){
-                viewCurrReqCreditsB.setBackground(Color.CYAN);
-                //topHomeP.setVisible(false);
-                //homeP.setVisible(false);
+
+                String intChange;
+                intChange = "Current Credits: ";
+
+                for(Course c : courseList){
+                    currCredits += c.getCourseCredit();
+                }
+
+                intChange += Double.toString(currCredits);
+
+                currCredits = 0.0;
+
+                JOptionPane.showMessageDialog(homeP, intChange);
+
             }
             else if(event.getSource() == viewGpaB){
-                determineCompletionB.setBackground(Color.BLACK);
-                //topHomeP.setVisible(false);
-                //homeP.setVisible(false);
+
+                String string = "GPA: ";
+                Integer counter = 0;
+                double fakeGPA = 0.0;
+
+                for(Course c : courseList){
+                    counter++;
+                }
+
+                fakeGPA = GPA;
+                fakeGPA = fakeGPA / counter;
+
+                string += fakeGPA;
+
+                JOptionPane.showMessageDialog(homeP,string);
+
+
             }
             else if(event.getSource() == determineCompletionB){
-                viewGpaB.setBackground(Color.ORANGE);
-                //topHomeP.setVisible(false);
-                //homeP.setVisible(false);
+                JOptionPane.showMessageDialog(homeP,"I'ts not");
             }
             else if(event.getSource() == viewCoursePlanB){
                 //topHomeP.setVisible(false);
@@ -627,6 +691,7 @@ public class Planner extends JFrame {
                 stringList = toStringCourses(requiredCourses);
                 System.out.println(stringList);
                 selectMajorB.setEnabled(false);
+                addRemoveCourseB.setEnabled(true);
                 majorP.setVisible(false);
                 homeP.setVisible(true);
                 pack();
@@ -640,32 +705,96 @@ public class Planner extends JFrame {
 
             if(event.getSource() == addSelectedCourseB){
 
-                String string = null;
-                Degree currDegree = null;
+                String string;
+                String semString = null;
 
                 string = addCourseText.getText();
 
-                currDegree = student.getDegreeProgram();
+                if(courseCatalog.findCourse(string) != null){
+                    Course course = courseCatalog.findCourse(string);
 
-                if(currDegree.findDegreeCourse(string) != null){
+                    semString = course.getSemesterOffered();
 
+                    if(semString.equals("F")){
+                        semesterBox.addItem("F");
+                    }
+                    else if(semString.equals("W")){
+                        semesterBox.addItem("W");
+                    }
+                    else if(semString.equals("B")){
+                        semesterBox.addItem("F");
+                        semesterBox.addItem("W");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(addRemoveP,"No Semester to Choose From");
+                    }
+
+                    statusBox.addItem("Incomplete");
+                    statusBox.addItem("InProgress");
+                    statusBox.addItem("Complete");
+
+                    addRemoveP.setVisible(false);
+                    addRemoveFinalP.setVisible(true);
+                    pack();
+                }
+                else {
+                    JOptionPane.showMessageDialog(addRemoveP,"Incorrect Course Code");
                 }
 
-                addRemoveP.setVisible(false);
-                addRemoveP.setVisible(true);
-                pack();
             }
             else if(event.getSource() == addCourseB){
-                addRemoveP.setVisible(true);
-                addRemoveP.setVisible(false);
-                pack();
-            }
-            else if(event.getSource() == removeCourseB){
-                addRemoveP.setVisible(false);
+
+                String CourseCode;
+                String Grade;
+                String Semester;
+                String Status;
+                String Attempt;
+
+                CourseCode = addCourseText.getText();
+                System.out.println(CourseCode);
+                GPA += Integer.valueOf(gradeText.getText());
+                Grade = gradeText.getText();
+                System.out.println(Grade);
+                Semester = semesterBox.getSelectedItem().toString();
+                System.out.println(Semester);
+                Status = statusBox.getSelectedItem().toString();
+                System.out.println(Status);
+
+                courseList.add(courseCatalog.findCourse(CourseCode));
+
+                if(CourseCode == null || Grade == null || Semester == null || Status == null) {
+                    JOptionPane.showMessageDialog(addRemoveP,"Incorrect Course Code");
+                }
+                else {
+                    Attempt = CourseCode + "," + Grade + "," + Semester + "," + Status;
+                    attemptList.add(Attempt);
+                }
+                currTranscript.setText(toStringAttemptList(attemptList));
+
+                addCourseText.setText("");
+                gradeText.setText("");
+
+                semesterBox.removeAllItems();
+                statusBox.removeAllItems();
+
+                homeP.setVisible(true);
+                addRemoveFinalP.setVisible(false);
                 pack();
             }
         }
     }
+
+    public String toStringAttemptList(ArrayList<String> attemptList){
+
+        String string = null;
+
+        for(String s : attemptList){
+            string += s + "\n";
+        }
+
+        return string;
+    }
+
     public String toStringCourses(ArrayList<Course> courseList){
 
         String newString = null;

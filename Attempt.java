@@ -19,7 +19,6 @@ public class Attempt {
         this.courseStatus = attempt.getCourseStatus();
         this.grade = attempt.getCourseGrade();
         this.semester = attempt.getSemesterTaken();
-        this.courses = attempt.getCourses();
     }
 
     public void setCourseStatus(String courseStatus) {
@@ -35,7 +34,6 @@ public class Attempt {
         }
 
         int gradeNum;
-        /*Maybe check for accidental string being passed in*/
         try {
             gradeNum = Integer.parseInt(grade);
             if (gradeNum <= 100 && gradeNum >= 0) {
