@@ -70,17 +70,19 @@ public class Planner extends JFrame {
 
     /*Add or Remove Course UI*/
     private JPanel addRemoveP = new JPanel();
-    private JPanel addP = new JPanel();
-    private JPanel removeP = new JPanel();
+    private JPanel addRemoveFinalP = new JPanel();
     private JLabel chooseActionL = new JLabel("Choose an Action: ");
     private JButton addCourseB = new JButton("Add Course");
     private JButton removeCourseB = new JButton("Remove Course");
     private JLabel chooseCourseL = new JLabel("Choose a Course Code: ");
-    private JLabel chooseCourse2L = new JLabel("Choose a Course Code: ");
     private JTextField addCourseText = new JTextField(10);
-    private JTextField removeCourseText = new JTextField(10);
     private JButton addSelectedCourseB = new JButton("Confirm");
-    private JButton removeSelectedCourseB = new JButton("Confirm");
+    private JLabel currGrade = new JLabel("Input Grade: ");
+    private JTextField gradeText = new JTextField(10);
+    private JLabel currSemester = new JLabel("Semester of choice: ");
+    private JComboBox semesterBox = new JComboBox();
+    private JLabel currStatus = new JLabel("Choose Status");
+    private JComboBox statusBox = new JComboBox();
 
     public Planner() {
         super();
@@ -89,7 +91,6 @@ public class Planner extends JFrame {
     }
 
     public void gui(){
-        transcript.setCatalog(courseCatalog);
         setSize(600,400);
         setTitle("Welcome!");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -275,50 +276,66 @@ public class Planner extends JFrame {
 
     private void addRemoveCourse(){
         //addRemoveP.setVisible(false);
-        addP.setVisible(false);
-        removeP.setVisible(false);
+        //addRemoveFinalP.setVisible(false);
 
-        addRemoveP.setLayout(new BorderLayout());
-
-        addRemoveP.add(chooseActionL, BorderLayout.NORTH);
-        addRemoveP.add(addCourseB, BorderLayout.WEST);
-        addRemoveP.add(removeCourseB, BorderLayout.EAST);
-
-        addP.setLayout(new GridBagLayout());
+        addRemoveP.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.BOTH;
 
-        addP.add(chooseCourseL, gbc);
+        addRemoveP.add(chooseCourseL, gbc);
         gbc.gridy++;
-        addP.add(addCourseText, gbc);
+        addRemoveP.add(addCourseText, gbc);
         gbc.gridx++;
-        addP.add(addSelectedCourseB, gbc);
+        addRemoveP.add(addSelectedCourseB, gbc);
 
-        removeP.setLayout(new GridBagLayout());
+        addRemoveFinalP.setLayout(new GridBagLayout());
         GridBagConstraints gbc2 = new GridBagConstraints();
         gbc2.gridx = 0;
         gbc2.gridy = 0;
         gbc2.anchor = GridBagConstraints.WEST;
         gbc2.fill = GridBagConstraints.BOTH;
 
-        removeP.add(chooseCourse2L, gbc2);
+        addRemoveFinalP.add(currGrade, gbc2);
         gbc2.gridy++;
-        removeP.add(removeCourseText, gbc2);
+        addRemoveFinalP.add(gradeText, gbc2);
+        gbc2.gridy = 0;
         gbc2.gridx++;
-        removeP.add(removeSelectedCourseB, gbc2);
+        addRemoveFinalP.add(currSemester, gbc2);
+        gbc2.gridy++;
+        addRemoveFinalP.add(semesterBox, gbc2);
+        gbc2.gridy = 0;
+        gbc2.gridx++;
+        addRemoveFinalP.add(currStatus, gbc2);
+        gbc2.gridy++;
+        addRemoveFinalP.add(statusBox, gbc2);
+        gbc2.gridy = 3;
+        gbc2.gridx = 1;
+        addRemoveFinalP.add(chooseActionL, gbc2);
+        gbc2.gridy = 4;
+        gbc2.gridx = 0;
+        addRemoveFinalP.add(addCourseB, gbc2);
+        gbc2.gridx = 2;
+        addRemoveFinalP.add(removeCourseB, gbc2);
+        
+        /*
+        private JTextField gradeText = new JTextField(10);
+        private JLabel currSemester = new JLabel("Semester of choice: ");
+        private JComboBox semesterBox = new JComboBox();
+        private JLabel currStatus = new JLabel("Choose Status");
+        private JComboBox statusBox = new JComboBox();
+        private JButton submitChoice = new JButton("Submit");*/
+
 
         addRemoveCourseListener addRemove = new addRemoveCourseListener();
         addCourseB.addActionListener(addRemove);
         removeCourseB.addActionListener(addRemove);
         addSelectedCourseB.addActionListener(addRemove);
-        removeSelectedCourseB.addActionListener(addRemove);
 
         add(addRemoveP);
-        add(addP);
-        add(removeP);
+        add(addRemoveFinalP);
     }
 
     public class startUpListener implements ActionListener
@@ -393,10 +410,10 @@ public class Planner extends JFrame {
                     e.printStackTrace();
                 }
 
-
                 student.setFirstName(first);
                 student.setLastName(last);
                 student.setStudentNumber(ID);
+                student.setTranscript(transcript);
 
                 studentInfo.add(first);
                 studentInfo.add(last);
@@ -621,24 +638,30 @@ public class Planner extends JFrame {
     {
         public void actionPerformed(ActionEvent event){
 
-            if(event.getSource() == addCourseB){
-                addP.setVisible(true);
+            if(event.getSource() == addSelectedCourseB){
+
+                String string = null;
+                Degree currDegree = null;
+
+                string = addCourseText.getText();
+
+                currDegree = student.getDegreeProgram();
+
+                if(currDegree.findDegreeCourse(string) != null){
+
+                }
+
+                addRemoveP.setVisible(false);
+                addRemoveP.setVisible(true);
+                pack();
+            }
+            else if(event.getSource() == addCourseB){
+                addRemoveP.setVisible(true);
                 addRemoveP.setVisible(false);
                 pack();
             }
             else if(event.getSource() == removeCourseB){
-                removeP.setVisible(true);
                 addRemoveP.setVisible(false);
-                pack();
-            }
-            else if(event.getSource() == addSelectedCourseB){
-                addP.setVisible(false);
-                addRemoveP.setVisible(true);
-                pack();
-            }
-            else if(event.getSource() == removeSelectedCourseB){
-                removeP.setVisible(false);
-                addRemoveP.setVisible(true);
                 pack();
             }
         }

@@ -14,13 +14,15 @@ public class Student {
     private String last;
     private int studentNum;
     private Degree deg;
-    private Transcript transcript;
+    Transcript transcript;
+    private Attempt attempt;
 
     public Student() {
         this.first = null;
         this.last = null;
         this.studentNum = 0;
         this.deg = null;
+        this.attempt = null;
     }
 
     public void setFirstName(String first) {
@@ -57,6 +59,12 @@ public class Student {
         this.transcript = transcript;
     }
 
+    public void setAttempt(String grade, String semester, String courseStatus){
+        attempt.setCourseGrade(grade);
+        attempt.setSemesterTaken(semester);
+        attempt.setCourseStatus(courseStatus);
+    }
+
     public String getFirstName() { return this.first; }
 
     public String getLastName() { return this.last; }
@@ -65,6 +73,13 @@ public class Student {
 
     public Degree getDegreeProgram() {
         return this.deg;
+    }
+
+    public Attempt getAttempt(){
+        attempt.getCourseGrade();
+        attempt.getSemesterTaken();
+        attempt.getCourseStatus();
+        return attempt;
     }
 
     public Transcript getTranscript(){

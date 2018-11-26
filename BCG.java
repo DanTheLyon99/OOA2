@@ -12,16 +12,17 @@ public class BCG extends GeneralDegree {
     private static final double rqrdCisStat2000orHigherCredits = 0.5;
     private static final double rqrdScienceCredits = 2.00;
     private static final double rqrdArtsSocialScienceCredits = 2.00;
+    private Transcript transcript = new Transcript();
 
     public BCG() {
         super();
     }
 
-    public boolean meetsRequirements(Transcript transcript) {
+    public boolean meetsRequirements(Attempt attempt) {
         double totalCredits = 0.0, credits3000 = 0.0, credits1000 = 0.0, creditsSubject = 0.0, creditsCisStat2000 = 0.0;
         String[] courseCodeParts;
         for (Course c : transcript.getCourses()) {
-            if (transcript.getCourseStatus().equals("Completed")) {
+            if (attempt.getCourseStatus().equals("Completed")) {
                 courseCodeParts = c.getCourseCode().split("\\*", 2);
                 if (courseCodeParts[0].equals("CIS")) {
                     creditsSubject += c.getCourseCredit();
@@ -45,13 +46,13 @@ public class BCG extends GeneralDegree {
     }
 
 
-    public double numberOfCreditsRemaining(Transcript transcript) {
+    public double numberOfCreditsRemaining(Attempt attempt) {
         double remainingCredits = 0;
         boolean completed = false;
         CourseCatalog catalog = transcript.getCatalog();
         ArrayList<Course> courses = transcript.getCourses();
         for (Course c : courses) {
-            if (! transcript.getCourseStatus().equals("Completed")){
+            if (! attempt.getCourseStatus().equals("Completed")){
                 if (!completed) {
                     remainingCredits += c.getCourseCredit();
                 }
@@ -60,21 +61,21 @@ public class BCG extends GeneralDegree {
         return remainingCredits;
     }
 
-    public ArrayList<Course> remainingRequiredCourses(Transcript transcript) {
+    public ArrayList<Course> remainingRequiredCourses(Attempt attempt) {
         boolean completed = false;
         CourseCatalog catalog = transcript.getCatalog();
         ArrayList<Course> remainingRequiredCourses = new ArrayList<>();
         ArrayList<Course> courses = transcript.getCourses();
-        for (String needed : this.listOfRequiredCourseCodes) {
+        for (Course needed : this.courseList) {
             for (Course c : courses) {
-                if ((c.getCourseCode() != null && c.getCourseCode().equals(needed)) && (transcript.getCourseStatus() != null && transcript.getCourseStatus().equals("Completed"))) {
+                if ((c.getCourseCode() != null && c.getCourseCode().equals(needed)) && (attempt.getCourseStatus() != null && attempt.getCourseStatus().equals("Completed"))) {
                     completed = true;
                     break;
                 }
             }
             if (!completed) {
-                if (catalog.findCourse(needed) != null) {
-                    remainingRequiredCourses.add(catalog.findCourse(needed));
+                if (catalog.findCourse(needed.getCourseCode()) != null) {
+                    remainingRequiredCourses.add(catalog.findCourse(needed.getCourseCode()));
                 } else {
                     System.out.println("Course not in catalog: " + needed);
                 }
@@ -90,10 +91,10 @@ public class BCG extends GeneralDegree {
         if (this.title != null) {
             toString = new StringBuilder(("Code: " + this.title + System.getProperty("line.separator")));
         }
-        if (this.listOfRequiredCourseCodes != null) {
+        if (this.courseList != null) {
             toString.append("Required Course Codes: ");
-            for (String s : listOfRequiredCourseCodes) {
-                toString.append(s).append(" ");
+            for (Course s : courseList) {
+                toString.append(s.getCourseCode()).append(" ");
             }
             toString.append(System.getProperty("line.separator"));
         }
@@ -114,14 +115,14 @@ public class BCG extends GeneralDegree {
         if (!(this.title.equals(bcg.title))) {
             return false;
         }
-        return this.listOfRequiredCourseCodes.equals(bcg.listOfRequiredCourseCodes);
+        return this.courseList.equals(bcg.courseList);
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 41 * hash + Objects.hashCode(getDegreeTitle());
-        hash = 41 * hash + Objects.hashCode(this.listOfRequiredCourseCodes);
+        hash = 41 * hash + Objects.hashCode(this.courseList);
         return hash;
     }
 }

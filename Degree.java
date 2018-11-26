@@ -3,12 +3,12 @@ import java.util.ArrayList;
 
 public abstract class Degree {
     String title;
-    ArrayList<String> listOfRequiredCourseCodes;  //this should probably be an ArrayList<Course>
+    ArrayList<Course> courseList = new ArrayList<>();
     CourseCatalog courseCatalog;
 
     public Degree() {
         this.title = null;
-        this.listOfRequiredCourseCodes = new ArrayList<>();
+        ArrayList<Course> courseList = new ArrayList<>();
         this.courseCatalog = new CourseCatalog();
     }
 
@@ -33,27 +33,20 @@ public abstract class Degree {
         }
     }
 
-    public void setDegreeTitle(String title) {
+    protected void setDegreeTitle(String title) {
         if (title != null && !title.isEmpty())
             this.title = title;
     }
 
     public String getDegreeTitle() { return this.title; }
 
-    public void setRequiredCourses(ArrayList<String> listOfRequiredCourseCodes) {
-        if (listOfRequiredCourseCodes != null && !listOfRequiredCourseCodes.isEmpty())
-            this.listOfRequiredCourseCodes = listOfRequiredCourseCodes;
+    protected void setRequiredCourses(ArrayList<Course> courseList) {
+        if (courseList != null && !courseList.isEmpty())
+            this.courseList = courseList;
     }
 
         public ArrayList<Course> getRequiredCourses()
         {
-        	/***algorithm
-				for each course code in listOfRequiredCourseCodes:
-				     find the course in the course catalog
-				     add the found course to an arraylist
-			     return the arraylist
-	
-        	**/
         	String string = null;
         	String[] stringList;
         	ArrayList<Course> courseList = new ArrayList<>();
@@ -83,7 +76,7 @@ public abstract class Degree {
             return courseList;
         }
 
-    public void setCatalog(CourseCatalog catalog) {
+    protected void setCatalog(CourseCatalog catalog) {
         this.courseCatalog = catalog;
     }
 
@@ -91,9 +84,18 @@ public abstract class Degree {
         return this.courseCatalog;
     }
 
-    public abstract boolean meetsRequirements(Transcript transcript);
-    public abstract double numberOfCreditsRemaining(Transcript transcript);
-    public abstract ArrayList<Course> remainingRequiredCourses(Transcript transcript);
+    public Course findDegreeCourse(String courseCode){
+        for (Course c : courseList) {
+            if (c.getCourseCode().equals(courseCode)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public abstract boolean meetsRequirements(Attempt attempt);
+    public abstract double numberOfCreditsRemaining(Attempt attempt);
+    public abstract ArrayList<Course> remainingRequiredCourses(Attempt attempt);
 
     @Override
     public abstract String toString();

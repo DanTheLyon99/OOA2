@@ -81,16 +81,14 @@ public class CourseCatalog {
                     ArrayList<String> preReqListString = new ArrayList<>();
                     fileContents[index] = fileLine.split(",");
 
-                    if (fileContents[index].length == 4) {
-                        /*Ask judi how this works*/
-                        if (fileContents[index][3].length() > 3) {
-                            if (fileContents[index][3].contains(":")) {
-                                String[] prereques = fileContents[index][3].split(":");
+                    if (fileContents[index].length == 5) {
+                        if (fileContents[index][4].length() > 3) {
+                            if (fileContents[index][4].contains(":")) {
+                                String[] prereques = fileContents[index][4].split(":");
                                 preReqListString.addAll(Arrays.asList(prereques));
                             } else {
-                                preReqListString.add(fileContents[index][3]);
+                                preReqListString.add(fileContents[index][4]);
                             }
-
                             for (String s : preReqListString) {
                                 Course preReq = new Course();
                                 preReq.setCourseCode(s);
@@ -103,6 +101,7 @@ public class CourseCatalog {
                     Course fileCourse = new Course();
                     fileCourse.setCourseCode(fileContents[index][0]);
                     fileCourse.setCourseTitle(fileContents[index][2]);
+                    fileCourse.setSemesterOffered(fileContents[index][3]);
                     fileCourse.setCourseCredit(Double.parseDouble(fileContents[index][1]));
                     fileCourse.setPrerequisites(preReqList);
 
