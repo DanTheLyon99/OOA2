@@ -15,6 +15,8 @@ public class CS extends HonoursDegree{
     public CS() {
         super();
     }
+    /**@Author Mathieu **/
+
 
     public boolean meetsRequirements(Attempt attempt) {
         double totalCredits = 0.0, credits3000 = 0.0, credits1000 = 0.0, creditsSubject = 0.0, creditsCisStat2000 = 0.0;
@@ -40,8 +42,10 @@ public class CS extends HonoursDegree{
                 }
             }
         }
-        /*?*/return totalCredits >= rqrdNumberOfCredits && credits3000 >= rqrd3000orHigherCredits && creditsCisStat2000 >= rqrdCisStat2000orHigherCredits;
+        return totalCredits >= rqrdNumberOfCredits && credits3000 >= rqrd3000orHigherCredits && creditsCisStat2000 >= rqrdCisStat2000orHigherCredits;
     }
+    /**@Author Daniel **/
+
 
 
     public double numberOfCreditsRemaining(Attempt attempt) {

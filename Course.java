@@ -16,6 +16,8 @@ public class Course {
         this.preReqList = new ArrayList<>();
         this.credit = 0;
     }
+    /**@Author Daniel **/
+
 
     /*  Deep Copy Constructor for Course */
     public Course(Course course) {
@@ -24,18 +26,24 @@ public class Course {
         this.preReqList = course.getPrerequisites();
         this.credit = course.getCourseCredit();
     }
+    /**@Author Mathieu **/
+
 
     protected void setCourseCode(String courseCode) {
         if (courseCode != null && !courseCode.isEmpty()) {
             this.courseCode = courseCode;
         }
     }
+    /**@Author Daniel **/
+
 
     protected void setCourseTitle(String courseTitle) {
         if (courseTitle != null && !courseTitle.isEmpty()) {
             this.courseTitle = courseTitle;
         }
     }
+    /**@Author Mathieu **/
+
 
     protected void setPrerequisites(ArrayList<Course> preReqList) {
         if (preReqList == null) {
@@ -44,12 +52,16 @@ public class Course {
             this.preReqList = preReqList;
         }
     }
+    /**@Author Mathieu **/
+
 
     protected void setCourseCredit(Double credit) {
         if (credit != null && credit >= 0 && credit <= 1.0) {
             this.credit = credit;
         }
     }
+    /**@Author Daniel **/
+
 
     protected void setSemesterOffered(String sem){
         if(sem == null){
@@ -59,18 +71,26 @@ public class Course {
             this.semesterOffered = sem;
         }
     }
+    /**@Author Mathieu **/
+
 
     public String getCourseCode() { return this.courseCode; }
+    /**@Author Daniel **/
+
 
     public String getCourseTitle() { return this.courseTitle; }
+    /**@Author Daniel **/
 
     public double getCourseCredit() { return this.credit; }
+    /**@Author Daniel **/
 
     public ArrayList<Course> getPrerequisites() { return this.preReqList; }
+    /**@Author Mathieu **/
 
     public String getSemesterOffered(){
         return this.semesterOffered;
     }
+    /**@Author Mathieu **/
 
     public String toFile() {
         String toFile = "";
@@ -93,6 +113,8 @@ public class Course {
         toFile += "?";
         return toFile;
     }
+    /**@Author Daniel **/
+
 
     @Override
     public String toString() {
@@ -117,6 +139,8 @@ public class Course {
         }
         return toString.toString();
     }
+    /**@Author Mathieu **/
+
 
     @Override
     public boolean equals(Object o) {
@@ -138,6 +162,8 @@ public class Course {
 
         return this.preReqList.equals(course.preReqList);
     }
+    /**@Author Daniel **/
+
 
     @Override
     public int hashCode() {
@@ -147,4 +173,6 @@ public class Course {
         hash = 53 * hash + Objects.hashCode(this.preReqList);
         return hash;
     }
+    /**@Author Mathieu **/
+
 }

@@ -96,6 +96,7 @@ public class Planner extends JFrame {
         courseCatalog.initializeCatalog("C:/Users/Mathi/Documents/src/courseListA2.txt");
         gui();
     }
+    /**@Author Daniel **/
 
     public void gui(){
         setSize(600,400);
@@ -112,6 +113,8 @@ public class Planner extends JFrame {
         addRemoveCourse();
         pack();
     }
+    /**@Author Mathieu **/
+
 
     private void startUp(){
         startP.setVisible(false);
@@ -131,6 +134,8 @@ public class Planner extends JFrame {
         add(labelP);
         add(startP);
     }
+    /**@Author Daniel **/
+
 
     private void adminOrUser(){
         inputP.setVisible(false);
@@ -164,6 +169,8 @@ public class Planner extends JFrame {
 
         add(inputP);
     }
+    /**@Author Mathieu **/
+
 
     private void Home(){
         //homeP.setVisible(false);
@@ -252,6 +259,8 @@ public class Planner extends JFrame {
 
         add(homeP);
     }
+    /**@Author Mathieu **/
+
 
     private void chooseDegree(){
         degreeP.setVisible(false);
@@ -265,6 +274,8 @@ public class Planner extends JFrame {
         submitDegree.addActionListener(listen);
         add(degreeP);
     }
+    /**@Author Daniel **/
+
 
     private void chooseMajor(){
         majorP.setVisible(false);
@@ -294,6 +305,7 @@ public class Planner extends JFrame {
 
         add(majorP);
     }
+    /**@Author Mathieu **/
 
     private void addRemoveCourse(){
         addRemoveP.setVisible(false);
@@ -355,6 +367,8 @@ public class Planner extends JFrame {
         add(addRemoveP);
         add(addRemoveFinalP);
     }
+    /**@Author Daniel **/
+
 
     public class startUpListener implements ActionListener
     {
@@ -447,6 +461,8 @@ public class Planner extends JFrame {
             }
         }
     }
+    /**@Author Daniel **/
+
 
     public class homeListener implements ActionListener
     {
@@ -582,6 +598,8 @@ public class Planner extends JFrame {
             viewCoursePlanB*/
         }
     }
+    /**@Author Mathieu **/
+
 
     public class degListener implements ActionListener
     {
@@ -620,7 +638,7 @@ public class Planner extends JFrame {
             }
         }
     }
-    /** @author: Dan, by the way **/
+    /** @author: Daniel**/
 
     public class majorListener implements ActionListener
     {
@@ -698,6 +716,8 @@ public class Planner extends JFrame {
             }
         }
     }
+    /**@Author Mathieu **/
+
 
     public class addRemoveCourseListener implements ActionListener
     {
@@ -783,6 +803,8 @@ public class Planner extends JFrame {
             }
         }
     }
+    /**@Author Daniel **/
+
 
     public String toStringAttemptList(ArrayList<String> attemptList){
 
@@ -794,6 +816,7 @@ public class Planner extends JFrame {
 
         return string;
     }
+    /**@Author Mathieu **/
 
     public String toStringCourses(ArrayList<Course> courseList){
 
@@ -805,9 +828,14 @@ public class Planner extends JFrame {
 
         return newString;
     }
+    /**@Author Daniel **/
+
     public boolean isAlphabetical(String input) {
         return input.matches("[a-zA-Z]+");
     }
+
+    /**@Author Mathieu **/
+
 
     public String toStringList(ArrayList<String> list){
 
@@ -819,13 +847,19 @@ public class Planner extends JFrame {
         }
         return newString;
     }
+    /**@Author Daniel **/
+
 
     public class NullException extends Exception {
         public NullException(String message) { super(message); }
     }
+    /**@Author Mathieu **/
+
 
     public static void main(String[] args){
         Planner planner = new Planner();
         planner.setVisible(true);
     }
+    /**@Author Daniel **/
+
 }

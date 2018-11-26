@@ -11,6 +11,8 @@ public class Transcript {
         this.catalogCopy = new CourseCatalog();
         this.attempt = new Attempt();
     }
+    /**@Author Mathieu **/
+
 
     public void setCourseStatus(String courseCode, String semester, String courseStatus, Transcript transcript) {
         for (Course c : this.courses) {
@@ -19,6 +21,7 @@ public class Transcript {
             }
         }
     }
+    /**@Author Mathieu **/
 
     public void setCourseGrade(String courseCode, String semester, String grade, Transcript transcript) {
         for (Course c : this.courses) {
@@ -30,19 +33,26 @@ public class Transcript {
         }
         System.out.println("Grade could not be updated.");
     }
+    /**@Author Mathieu **/
 
     public void setCourses(ArrayList<Course> courses){
         this.courses = courses;
     }
+    /**@Author Daniel **/
+
     public void setCatalog(CourseCatalog catalog) {
         this.catalogCopy = catalog;
     }
+    /**@Author Daniel **/
 
     public ArrayList<Course> getCourses() { return this.courses; }
+    /**@Author Daniel **/
 
     public CourseCatalog getCatalog() {
         return this.catalogCopy;
     }
+    /**@Author Daniel **/
+
     public Course getCourse(String courseCode, String semester, Transcript transcript) {
         for (Course c : transcript.courses) {
             if (c.getCourseCode() != null && attempt.getSemesterTaken() != null && c.getCourseCode().equals(courseCode) && attempt.getSemesterTaken().equals(semester)) {
@@ -51,6 +61,8 @@ public class Transcript {
         }
         return null;
     }
+    /**@Author Mathieu **/
+
 
     public Course findCourse(String courseCode) {
         Course found;
@@ -59,6 +71,7 @@ public class Transcript {
         }
         return null;
     }
+    /**@Author Mathieu **/
 
     public void addCourse(String courseCode, String semester, Transcript transcript) {
         boolean alreadyAdded = false;
@@ -86,6 +99,7 @@ public class Transcript {
             }
         }
     }
+    /**@Author Daniel **/
 
     private Course isValidCourse(String courseCode) {
         Course found = this.catalogCopy.findCourse(courseCode);
@@ -94,6 +108,8 @@ public class Transcript {
         }
         return null;
     }
+    /**@Author Mathieu **/
+
 
     public void removeCourse(String courseCode, String semester,Transcript transcript) {
         for (Course c : transcript.courses) {
@@ -103,6 +119,8 @@ public class Transcript {
             }
         }
     }
+    /**@Author Daniel **/
+
 
     public double totalCredits(Transcript transcript) {
         double totalCredits = 0.0;
@@ -114,3 +132,4 @@ public class Transcript {
         return totalCredits;
     }
 }
+/**@Author Daniel **/

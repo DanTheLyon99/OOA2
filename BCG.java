@@ -17,6 +17,7 @@ public class BCG extends GeneralDegree {
     public BCG() {
         super();
     }
+    /**@Author Daniel **/
 
     public boolean meetsRequirements(Attempt attempt) {
         double totalCredits = 0.0, credits3000 = 0.0, credits1000 = 0.0, creditsSubject = 0.0, creditsCisStat2000 = 0.0;
@@ -42,8 +43,9 @@ public class BCG extends GeneralDegree {
                 }
             }
         }
-        /*?*/return totalCredits >= rqrdNumberOfCredits && credits3000 >= rqrd3000orHigherCredits && creditsCisStat2000 >= rqrdCisStat2000orHigherCredits;
+        return totalCredits >= rqrdNumberOfCredits && credits3000 >= rqrd3000orHigherCredits && creditsCisStat2000 >= rqrdCisStat2000orHigherCredits;
     }
+    /**@Author Daniel **/
 
 
     public double numberOfCreditsRemaining(Attempt attempt) {
@@ -60,6 +62,7 @@ public class BCG extends GeneralDegree {
         }
         return remainingCredits;
     }
+    /**@Author Mathieu**/
 
     public ArrayList<Course> remainingRequiredCourses(Attempt attempt) {
         boolean completed = false;
@@ -84,6 +87,8 @@ public class BCG extends GeneralDegree {
         }
         return remainingRequiredCourses;
     }
+    /**@Author Daniel **/
+
 
     @Override
     public String toString() {

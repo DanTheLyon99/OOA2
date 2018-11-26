@@ -14,18 +14,24 @@ public class Attempt {
         this.semester = null;
         this.courses = new Course();
     }
+    /**@Author Mathieu **/
+
+
 
     public Attempt(Attempt attempt) {
         this.courseStatus = attempt.getCourseStatus();
         this.grade = attempt.getCourseGrade();
         this.semester = attempt.getSemesterTaken();
     }
+    /**@Author Daniel **/
+
 
     public void setCourseStatus(String courseStatus) {
         if (courseStatus != null && !courseStatus.isEmpty()) {
             this.courseStatus = courseStatus;
         }
     }
+    /**@Author Mathieu **/
 
     public void setCourseGrade(String grade) {
         if (grade == null) {
@@ -43,24 +49,31 @@ public class Attempt {
             System.out.println("Grades must be between 0 and 100.");
         }
     }
+    /**@Author Daniel **/
 
     public void setSemesterTaken(String semester) {
         if (semester != null && !semester.isEmpty()) {
             this.semester = semester;
         }
     }
+    /**@Author Mathieu **/
 
     public void setCourses(Course courses){
         this.courses = courses;
     }
 
     public String getCourseStatus() { return this.courseStatus; }
+    /**@Author Daniel **/
+
 
     public String getCourseGrade() { return this.grade; }
+    /**@Author Daniel **/
 
     public String getSemesterTaken() { return this.semester; }
+    /**@Author Mathieu **/
 
     public Course getCourses() { return this.courses; }
+    /**@Author Mathieu **/
 
 
     @Override
@@ -77,6 +90,8 @@ public class Attempt {
         }
         return toString.toString();
     }
+    /**@Author Mathieu **/
+
 
     @Override
     public boolean equals(Object o) {
@@ -103,6 +118,7 @@ public class Attempt {
         }
         return false;
     }
+    /**@Author Daniel **/
 
     @Override
     public int hashCode() {
@@ -112,4 +128,6 @@ public class Attempt {
         hash = 53 * hash + Objects.hashCode(this.semester);
         return hash;
     }
+    /**@Author Mathieu **/
+
 }

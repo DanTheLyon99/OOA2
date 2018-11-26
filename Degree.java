@@ -11,6 +11,8 @@ public abstract class Degree {
         ArrayList<Course> courseList = new ArrayList<>();
         this.courseCatalog = new CourseCatalog();
     }
+    /**@Author Mathieu **/
+
 
     public void saveState() {
         try (FileWriter PoSData = new FileWriter("BootstrapDegrees.txt", true)) {
@@ -32,18 +34,23 @@ public abstract class Degree {
             System.out.println("Failed to successfully save state for Plan Of Study.");
         }
     }
+    /**@Author Daniel **/
 
     protected void setDegreeTitle(String title) {
         if (title != null && !title.isEmpty())
             this.title = title;
     }
+    /**@Author Daniel **/
+
 
     public String getDegreeTitle() { return this.title; }
+    /**@Author Daniel **/
 
     protected void setRequiredCourses(ArrayList<Course> courseList) {
         if (courseList != null && !courseList.isEmpty())
             this.courseList = courseList;
     }
+    /**@Author Mathieu **/
 
         public ArrayList<Course> getRequiredCourses()
         {
@@ -75,14 +82,20 @@ public abstract class Degree {
             }
             return courseList;
         }
+    /**@Author Daniel **/
+
 
     protected void setCatalog(CourseCatalog catalog) {
         this.courseCatalog = catalog;
     }
+    /**@Author Mathieu **/
+
 
     public CourseCatalog getCatalog() {
         return this.courseCatalog;
     }
+    /**@Author Mathieu **/
+
 
     public Course findDegreeCourse(String courseCode){
         for (Course c : courseList) {
@@ -92,10 +105,17 @@ public abstract class Degree {
         }
         return null;
     }
+    /**@Author Daniel **/
+
 
     public abstract boolean meetsRequirements(Attempt attempt);
+    /**@Author Daniel **/
+
     public abstract double numberOfCreditsRemaining(Attempt attempt);
+    /**@Author Mathieu **/
+
     public abstract ArrayList<Course> remainingRequiredCourses(Attempt attempt);
+    /**@Author Daniel **/
 
     @Override
     public abstract String toString();

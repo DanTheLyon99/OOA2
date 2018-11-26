@@ -14,12 +14,18 @@ public class CourseCatalog {
     public CourseCatalog() {
         this.courseCatalog = new ArrayList<>();
     }
+    /**@Author Daniel **/
+
 
     public void setCourseCatalog(ArrayList<Course> courseCatalog) {
         this.courseCatalog = courseCatalog;
     }
+    /**@Author Mathieu **/
+
 
     public ArrayList<Course> getCourseCatalog() { return this.courseCatalog; }
+    /**@Author Daniel **/
+
 
     public void addCourse(Course toAdd) {
         for (Course c : this.courseCatalog) {
@@ -29,6 +35,8 @@ public class CourseCatalog {
         }
         courseCatalog.add(toAdd);
     }
+    /**@Author Mathieu **/
+
 
     public void removeCourse(Course toRemove) {
         for (Course c : this.courseCatalog) {
@@ -38,6 +46,8 @@ public class CourseCatalog {
             }
         }
     }
+    /**@Author Mathieu **/
+
 
     public Course findCourse(String courseCode) {
         for (Course c : this.courseCatalog) {
@@ -47,8 +57,11 @@ public class CourseCatalog {
         }
         return null;
     }
+    /**@Author Daniel **/
+
 
     public Boolean isEmpty() { return courseCatalog.isEmpty(); }
+    /**@Author Daniel **/
 
     public void saveCatalog() {
         try (FileWriter PoSData = new FileWriter("BootstrapCatalog.txt")) {
@@ -63,6 +76,7 @@ public class CourseCatalog {
             System.out.println("Failed to successfully save state for Plan Of Study.");
         }
     }
+    /**@Author Mathieu **/
 
     public void initializeCatalog(String filename) {
         try {
@@ -135,6 +149,8 @@ public class CourseCatalog {
             e.printStackTrace();
         }
     }
+    /**@Author Mathieu **/
+
 
     @Override
     public String toString() {
