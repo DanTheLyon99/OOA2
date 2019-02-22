@@ -1,4 +1,4 @@
-
+/*package needed*/
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -14,12 +14,18 @@ public class CourseCatalog {
     public CourseCatalog() {
         this.courseCatalog = new ArrayList<>();
     }
+    /**@Author Daniel **/
+
 
     public void setCourseCatalog(ArrayList<Course> courseCatalog) {
         this.courseCatalog = courseCatalog;
     }
+    /**@Author Mathieu **/
+
 
     public ArrayList<Course> getCourseCatalog() { return this.courseCatalog; }
+    /**@Author Daniel **/
+
 
     public void addCourse(Course toAdd) {
         for (Course c : this.courseCatalog) {
@@ -29,6 +35,8 @@ public class CourseCatalog {
         }
         courseCatalog.add(toAdd);
     }
+    /**@Author Mathieu **/
+
 
     public void removeCourse(Course toRemove) {
         for (Course c : this.courseCatalog) {
@@ -38,6 +46,8 @@ public class CourseCatalog {
             }
         }
     }
+    /**@Author Mathieu **/
+
 
     public Course findCourse(String courseCode) {
         for (Course c : this.courseCatalog) {
@@ -47,8 +57,11 @@ public class CourseCatalog {
         }
         return null;
     }
+    /**@Author Daniel **/
+
 
     public Boolean isEmpty() { return courseCatalog.isEmpty(); }
+    /**@Author Daniel **/
 
     public void saveCatalog() {
         try (FileWriter PoSData = new FileWriter("BootstrapCatalog.txt")) {
@@ -63,6 +76,7 @@ public class CourseCatalog {
             System.out.println("Failed to successfully save state for Plan Of Study.");
         }
     }
+    /**@Author Mathieu **/
 
     public void initializeCatalog(String filename) {
         try {
@@ -81,15 +95,14 @@ public class CourseCatalog {
                     ArrayList<String> preReqListString = new ArrayList<>();
                     fileContents[index] = fileLine.split(",");
 
-                    if (fileContents[index].length == 4) {
-                        if (fileContents[index][3].length() > 3) {
-                            if (fileContents[index][3].contains(":")) {
-                                String[] prereques = fileContents[index][3].split(":");
+                    if (fileContents[index].length == 5) {
+                        if (fileContents[index][4].length() > 3) {
+                            if (fileContents[index][4].contains(":")) {
+                                String[] prereques = fileContents[index][4].split(":");
                                 preReqListString.addAll(Arrays.asList(prereques));
                             } else {
-                                preReqListString.add(fileContents[index][3]);
+                                preReqListString.add(fileContents[index][4]);
                             }
-
                             for (String s : preReqListString) {
                                 Course preReq = new Course();
                                 preReq.setCourseCode(s);
@@ -102,6 +115,7 @@ public class CourseCatalog {
                     Course fileCourse = new Course();
                     fileCourse.setCourseCode(fileContents[index][0]);
                     fileCourse.setCourseTitle(fileContents[index][2]);
+                    fileCourse.setSemesterOffered(fileContents[index][3]);
                     fileCourse.setCourseCredit(Double.parseDouble(fileContents[index][1]));
                     fileCourse.setPrerequisites(preReqList);
 
@@ -135,6 +149,8 @@ public class CourseCatalog {
             e.printStackTrace();
         }
     }
+    /**@Author Mathieu **/
+
 
     @Override
     public String toString() {

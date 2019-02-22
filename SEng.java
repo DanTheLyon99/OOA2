@@ -4,20 +4,22 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
-public class BCG extends GeneralDegree {
-
-    private static final double maxOneSubjectCredits = 11.00;
+public class SEng extends HonoursDegree {
+    private static final double maxOneSubjectCredits = 11.25;
     private static final double max1000LvlCredits = 6.00;
-    private static final double rqrd3000orHigherCredits = 4.00;
+    private static final double rqrd3000orHigherCredits = 6.00;
     private static final double rqrdCisStat2000orHigherCredits = 0.5;
-    private static final double rqrdScienceCredits = 2.00;
-    private static final double rqrdArtsSocialScienceCredits = 2.00;
+    private static final double maxAreaOfApplicationOrElective = 8.75;
     private Transcript transcript = new Transcript();
 
-    public BCG() {
+    public SEng() {
         super();
     }
-    /**@Author Daniel **/
+
+    /**
+     * @Author Mathieu
+     **/
+
 
     public boolean meetsRequirements(Attempt attempt) {
         double totalCredits = 0.0, credits3000 = 0.0, credits1000 = 0.0, creditsSubject = 0.0, creditsCisStat2000 = 0.0;
@@ -37,7 +39,6 @@ public class BCG extends GeneralDegree {
                 if ((courseCodeParts[0].equals("CIS") || courseCodeParts[0].equals("STAT")) && Double.parseDouble(courseCodeParts[1]) >= 2000) {
                     creditsCisStat2000 += c.getCourseCredit();
                 }
-                /*try-catch method needed for this conditional*/
                 if (creditsSubject < maxOneSubjectCredits && credits1000 < max1000LvlCredits) {
                     totalCredits += c.getCourseCredit();
                 }
@@ -45,7 +46,10 @@ public class BCG extends GeneralDegree {
         }
         return totalCredits >= rqrdNumberOfCredits && credits3000 >= rqrd3000orHigherCredits && creditsCisStat2000 >= rqrdCisStat2000orHigherCredits;
     }
-    /**@Author Daniel **/
+
+    /**
+     * @Author Mathieu
+     **/
 
 
     public double numberOfCreditsRemaining(Attempt attempt) {
@@ -54,7 +58,7 @@ public class BCG extends GeneralDegree {
         CourseCatalog catalog = transcript.getCatalog();
         ArrayList<Course> courses = transcript.getCourses();
         for (Course c : courses) {
-            if (! attempt.getCourseStatus().equals("Completed")){
+            if (!attempt.getCourseStatus().equals("Completed")) {
                 if (!completed) {
                     remainingCredits += c.getCourseCredit();
                 }
@@ -62,7 +66,11 @@ public class BCG extends GeneralDegree {
         }
         return remainingCredits;
     }
-    /**@Author Mathieu**/
+
+    /**
+     * @Author Daniel
+     **/
+
 
     public ArrayList<Course> remainingRequiredCourses(Attempt attempt) {
         boolean completed = false;
@@ -87,7 +95,10 @@ public class BCG extends GeneralDegree {
         }
         return remainingRequiredCourses;
     }
-    /**@Author Daniel **/
+
+    /**
+     * @Author Daniel
+     **/
 
 
     @Override
@@ -106,6 +117,11 @@ public class BCG extends GeneralDegree {
         return toString.toString();
     }
 
+    /**
+     * @Author Mathieu
+     **/
+
+
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -123,11 +139,16 @@ public class BCG extends GeneralDegree {
         return this.courseList.equals(bcg.courseList);
     }
 
+    /**
+     * @Author Mathieu
+     **/
+
+
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 41 * hash + Objects.hashCode(getDegreeTitle());
         hash = 41 * hash + Objects.hashCode(this.courseList);
         return hash;
-    }
+    }/**@Author Mathieu **/
 }

@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
-public class BCG extends GeneralDegree {
-
-    private static final double maxOneSubjectCredits = 11.00;
+public class CS extends HonoursDegree{
+    private static final double maxOneSubjectCredits = 11.25;
     private static final double max1000LvlCredits = 6.00;
-    private static final double rqrd3000orHigherCredits = 4.00;
+    private static final double rqrd3000orHigherCredits = 6.00;
     private static final double rqrdCisStat2000orHigherCredits = 0.5;
-    private static final double rqrdScienceCredits = 2.00;
-    private static final double rqrdArtsSocialScienceCredits = 2.00;
+    private static final double maxAreaOfApplicationOrElective = 8.75;
     private Transcript transcript = new Transcript();
 
-    public BCG() {
+    public CS() {
         super();
     }
-    /**@Author Daniel **/
+    /**@Author Mathieu **/
+
 
     public boolean meetsRequirements(Attempt attempt) {
         double totalCredits = 0.0, credits3000 = 0.0, credits1000 = 0.0, creditsSubject = 0.0, creditsCisStat2000 = 0.0;
@@ -48,6 +47,7 @@ public class BCG extends GeneralDegree {
     /**@Author Daniel **/
 
 
+
     public double numberOfCreditsRemaining(Attempt attempt) {
         double remainingCredits = 0;
         boolean completed = false;
@@ -62,7 +62,6 @@ public class BCG extends GeneralDegree {
         }
         return remainingCredits;
     }
-    /**@Author Mathieu**/
 
     public ArrayList<Course> remainingRequiredCourses(Attempt attempt) {
         boolean completed = false;
@@ -87,8 +86,6 @@ public class BCG extends GeneralDegree {
         }
         return remainingRequiredCourses;
     }
-    /**@Author Daniel **/
-
 
     @Override
     public String toString() {
@@ -131,3 +128,4 @@ public class BCG extends GeneralDegree {
         return hash;
     }
 }
+

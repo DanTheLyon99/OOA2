@@ -6,103 +6,91 @@ public class Course {
 
     private String courseCode;
     private String courseTitle;
-    private String courseStatus;/* TRANSCRIPT*/
-    private String grade;/* TRANSCRIPT*/
-    private String semester;/* TRANSCRIPT*/
-    private double credit;
     private ArrayList<Course> preReqList;
-
+    private double credit;
+    private String semesterOffered;
 
     public Course() {
         this.courseCode = null;
         this.courseTitle = null;
-        this.courseStatus = null;
-        this.grade = null;
-        this.semester = null;
-        this.credit = 0;
         this.preReqList = new ArrayList<>();
+        this.credit = 0;
     }
+    /**@Author Daniel **/
+
 
     /*  Deep Copy Constructor for Course */
     public Course(Course course) {
         this.courseCode = course.getCourseCode();
         this.courseTitle = course.getCourseTitle();
-        this.courseStatus = course.getCourseStatus();
-        this.grade = course.getCourseGrade();
-        this.semester = course.getSemesterTaken();
-        this.credit = course.getCourseCredit();
         this.preReqList = course.getPrerequisites();
+        this.credit = course.getCourseCredit();
     }
+    /**@Author Mathieu **/
 
-    public void setCourseCode(String courseCode) {
+
+    protected void setCourseCode(String courseCode) {
         if (courseCode != null && !courseCode.isEmpty()) {
             this.courseCode = courseCode;
         }
     }
+    /**@Author Daniel **/
 
-    public void setCourseTitle(String courseTitle) {
+
+    protected void setCourseTitle(String courseTitle) {
         if (courseTitle != null && !courseTitle.isEmpty()) {
             this.courseTitle = courseTitle;
         }
     }
+    /**@Author Mathieu **/
 
-    public void setCourseStatus(String courseStatus) {
-        if (courseStatus != null && !courseStatus.isEmpty()) {
-            this.courseStatus = courseStatus;
-        }
-    }
 
-    public void setCourseGrade(String grade) {
-        if (grade == null) {
-            this.grade = null;
-            return;
-        }
-
-        int gradeNum;
-        try {
-            gradeNum = Integer.parseInt(grade);
-            if (gradeNum <= 100 && gradeNum >= 0) {
-                this.grade = grade;
-            }
-        } catch (Exception ignored) {
-            System.out.println("Grades must be between 0 and 100.");
-        }
-    }
-
-    public void setSemesterTaken(String semester) {
-        if (semester != null && !semester.isEmpty()) {
-            this.semester = semester;
-        }
-
-    }
-
-    public void setCourseCredit(Double credit) {
-        if (credit != null && credit >= 0 && credit <= 1.0) {
-            this.credit = credit;
-        }
-    }
-
-    public void setPrerequisites(ArrayList<Course> preReqList) {
+    protected void setPrerequisites(ArrayList<Course> preReqList) {
         if (preReqList == null) {
             this.preReqList = null;
         } else {
             this.preReqList = preReqList;
         }
     }
+    /**@Author Mathieu **/
+
+
+    protected void setCourseCredit(Double credit) {
+        if (credit != null && credit >= 0 && credit <= 1.0) {
+            this.credit = credit;
+        }
+    }
+    /**@Author Daniel **/
+
+
+    protected void setSemesterOffered(String sem){
+        if(sem == null){
+            this.semesterOffered = null;
+        }
+        else{
+            this.semesterOffered = sem;
+        }
+    }
+    /**@Author Mathieu **/
+
 
     public String getCourseCode() { return this.courseCode; }
+    /**@Author Daniel **/
+
 
     public String getCourseTitle() { return this.courseTitle; }
-
-    public String getCourseStatus() { return this.courseStatus; }
-
-    public String getCourseGrade() { return this.grade; }
-
-    public String getSemesterTaken() { return this.semester; }
+    /**@Author Daniel **/
 
     public double getCourseCredit() { return this.credit; }
+    /**@Author Daniel **/
 
     public ArrayList<Course> getPrerequisites() { return this.preReqList; }
+    /**@Author Mathieu **/
+
+    public String getSemesterOffered(){
+        return this.semesterOffered;
+    }
+    /**@Author Mathieu **/
 
     public String toFile() {
         String toFile = "";
@@ -112,6 +100,8 @@ public class Course {
         toFile += ",";
         toFile += this.getCourseTitle();
         toFile += ",";
+        toFile += this.getSemesterOffered();
+        toFile += ",";
         for (Course preReq : this.getPrerequisites())  {
             toFile += preReq.getCourseCode();
             toFile += ":";
@@ -119,9 +109,12 @@ public class Course {
         if (toFile.charAt(toFile.length() - 1) == ':') {
             toFile = toFile.substring(0, toFile.length() - 1);
         }
+        /*?*/
         toFile += "?";
         return toFile;
     }
+    /**@Author Daniel **/
+
 
     @Override
     public String toString() {
@@ -132,17 +125,11 @@ public class Course {
         if (this.courseTitle != null) {
             toString.append("Title: ").append(this.courseTitle).append(System.getProperty("line.separator"));
         }
-        if (this.courseStatus != null) {
-            toString.append("Status: ").append(this.courseStatus).append(System.getProperty("line.separator"));
-        }
-        if (this.grade != null) {
-            toString.append("Grade: ").append(this.grade).append("\n");
-        }
-        if (this.semester != null) {
-            toString.append("Semester Taken: ").append(this.semester).append(System.getProperty("line.separator"));
-        }
         if (this.credit > 0) {
             toString.append("Credit: ").append(this.getCourseCredit()).append(System.getProperty("line.separator"));
+        }
+        if (this.semesterOffered != null){
+            toString.append("Semester: ").append(this.getSemesterOffered()).append(System.getProperty("line.separator"));
         }
         if (this.preReqList != null) {
             toString.append("Prerequisites: ");
@@ -152,6 +139,8 @@ public class Course {
         }
         return toString.toString();
     }
+    /**@Author Mathieu **/
+
 
     @Override
     public boolean equals(Object o) {
@@ -170,31 +159,20 @@ public class Course {
         if (course.courseTitle == null || !(this.courseTitle.equals(course.courseTitle))) {
             return false;
         }
-        if (course.courseStatus == null || !(this.courseStatus.equals(course.courseStatus))) {
-            return false;
-        }
-        if (this.grade != null && course.grade != null) {
-            if (!(this.grade.equals(course.grade))) {
-                return false;
-            }
-        }
-        if (this.semester != null && course.semester != null) {
-            if (!(this.semester.equals(course.semester))) {
-                return false;
-            }
-        }
+
         return this.preReqList.equals(course.preReqList);
     }
+    /**@Author Daniel **/
+
 
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 53 * hash + Objects.hashCode(this.courseCode);
         hash = 53 * hash + Objects.hashCode(this.courseTitle);
-        hash = 53 * hash + Objects.hashCode(this.courseStatus);
-        hash = 53 * hash + Objects.hashCode(this.grade);
-        hash = 53 * hash + Objects.hashCode(this.semester);
         hash = 53 * hash + Objects.hashCode(this.preReqList);
         return hash;
     }
+    /**@Author Mathieu **/
+
 }
