@@ -10,10 +10,10 @@ public class DBDetails
 
 /*Change the username to be your own login name */
 
-	public static final String username = "mgilmo03";
+	public static final String username = "";
 
 /* Change the password to be your student number.  DO NOT USE YOUR NORMAL PASSWORD*/
 
-	public  static final  String password = "0999675";
+	public  static final  String password = "";
 
 	}
